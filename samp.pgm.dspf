@@ -1,0 +1,18 @@
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      INDARA
+     A                                      REF(TESTFILEP)
+     A                                      CA03(03 'Exit')
+     A*----------------------------------------------------
+     A          R SFL01                     SFL
+     A            SFLRRN         4Y 0O  2  2EDTCDE(Z)
+     A            NAME      R        O  2  7
+     A*----------------------------------------------------
+     A          R CTL01                     SFLCTL(SFL01)
+     A                                      SFLSIZ(0100)
+     A                                      SFLPAG(0010)
+     A                                      OVERLAY
+     A  30                                  SFLDSP
+     A  30                                  SFLDSPCTL
+     A  30                                  SFLEND(*MORE)
+     A                                  1  2'Read subfile with CHAIN'
+     A                                      DSPATR(HI)
