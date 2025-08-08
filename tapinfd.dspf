@@ -1,42 +1,27 @@
-     A*==============================================================
      A                                      DSPSIZ(24 80 *DS3)
+     A                                      INDARA
+     A                                      REF(DDSCBK/TAPINF)
      A                                      CA03(03 'Exit')
-     A                                      CA12(12 'Scroll Down')
-     A                                      CA07(07 'Scroll Up')
-     A                                      CF05(05 'Refresh')
-     A*
-     A          R SFLRCD                    SFL
-     A            RDSYSN         8A  O  2 05
-     A            RDDTTM        13A  O  2 15
-     A            RDMID          6A  O  2 30
-     A            RDVOL          6A  O  2 38
-     A            RDLIB         10A  O  2 46
-     A            RDCGY         10A  O  2 58
-     A            RDSYS          8A  O  2 70
-     A* Add more fields as needed for display
-     A*
-     A          R SFLCTL                    SFLCTL(SFLRCD)
-     A                                      TEXT('Tape Information Subfile')
+     A                                      CA05(05 'Refresh')
+     A*----------------------------------------------------
+     A          R SFL01                     SFL
+     A            OPT            1A  I  9  5
+     A            RDMID     R        O  9 10
+     A            RDVOL     R        O  9 20
+     A            RDLIB     R        O  9 33
+     A            RDLOC     R        O  9 44
+     A            RDLOCI    R        O  9 55
+     A            RDWPR     R        O  9 65
+     A            RDMTYP    R        O  9 27
+     A*----------------------------------------------------
+     A          R CTL01                     SFLCTL(SFL01)
+     A                                      SFLSIZ(0100)
+     A                                      SFLPAG(0010)
      A                                      OVERLAY
-     A                                      SFLSIZ(0010)
-     A                                      SFLPAG(0005)
-     A  98                                  SFLDSP
-     A                                      SFLDSPCTL
-     A  99                                  SFLCLR
-     A  97                                  SFLEND(*MORE)
-     A*
-     A                                  3 50'Tape Information'
-     A                                       DSPATR(HI)
-     A                                  5 05'System Name'
-     A                                  5 15'Date/Time'
-     A                                  5 30'Media ID'
-     A                                  5 38'Volume'
-     A                                  5 46'Library'
-     A                                  5 58'Category'
-     A                                  5 70'System'
-     A*
-     A            PAGENO         5S0 P 23 72 
-     A                                       COLOR(BLU)
-     A                                 23 65'Page:'
-     A                                       DSPATR(HI)
-     A            MSGSFL         4A  O 24 01
+     A  30                                  SFLDSP
+     A  30                                  SFLDSPCTL
+     A  50                                  SFLCLR
+     A  51                                  SFLEND(*MORE)
+     A            SFLRRN         4S 0H      SFLRCDNBR(CURSOR)
+     A                                  1  2'Read tape information from file'
+     A                                      DSPATR(HI)
