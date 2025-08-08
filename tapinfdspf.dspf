@@ -1,18 +1,17 @@
      A*%%TS  SD  20250807  192550  CLARK       REL-V7R3M0  5770-WDS
      A*%%EC
      A                                      DSPSIZ(24 80 *DS3)
+     A                                      REF(DDSCBK/TAPINF)
      A          R SFLDTA01                  SFL
      A*%%TS  SD  20250805  135743  CLARK       REL-V7R3M0  5770-WDS
      A            OPT            1A  I  9  5
-     A            RDMID     R        O  9 10REFFLD(QTAVOUTF/RDMID DDSCBK/TAPINF)
-     A            RDVOL     R        O  9 20REFFLD(QTAVOUTF/RDVOL DDSCBK/TAPINF)
-     A            RDLIB     R        O  9 33REFFLD(QTAVOUTF/RDLIB DDSCBK/TAPINF)
-     A            RDLOC     R        O  9 44REFFLD(QTAVOUTF/RDLOC DDSCBK/TAPINF)
-     A            RDLOCI    R        O  9 55REFFLD(QTAVOUTF/RDLOCI DDSCBK/TAPIN-
-     A                                      F)
-     A            RDWPR     R        O  9 65REFFLD(QTAVOUTF/RDWPR DDSCBK/TAPINF)
-     A            RDMTYP    R        O  9 27REFFLD(QTAVOUTF/RDMTYP DDSCBK/TAPIN-
-     A                                      F)
+     A            RDMID     R        O  9 10
+     A            RDVOL     R        O  9 20
+     A            RDLIB     R        O  9 33
+     A            RDLOC     R        O  9 44
+     A            RDLOCI    R        O  9 55
+     A            RDWPR     R        O  9 65
+     A            RDMTYP    R        O  9 27
      A          R SFLCTL01                  SFLCTL(SFLDTA01)
      A*%%TS  SD  20250807  192550  CLARK       REL-V7R3M0  5770-WDS
      A                                      SFLSIZ(9999)
