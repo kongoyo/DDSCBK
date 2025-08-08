@@ -1,7 +1,7 @@
      A*%%TS  SD  20250807  192550  CLARK       REL-V7R3M0  5770-WDS
      A*%%EC
      A                                      DSPSIZ(24 80 *DS3)
-     A                                      REF(DDSCBK/TAPINF)
+     A                                      REF(STEVE/TAPINF)
      A          R SFLDTA01                  SFL
      A*%%TS  SD  20250805  135743  CLARK       REL-V7R3M0  5770-WDS
      A            OPT            1A  I  9  5

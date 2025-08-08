@@ -4,7 +4,7 @@ ctl-opt option(*nodebugio:*srcstmt) debug(*yes) dftactgrp(*no);
     //  HOPTION(*NODEBUGIO:*SRCSTMT)
       // *
       // * 檔案宣告
-dcl-f tapinf keyed;
+dcl-f tapinf usage(*update) keyed;
     //  FTAPINF    UF A E           K DISK
 dcl-f tapinfdspf workstn sfile(sfldta01:rrn#);
     //  FTAPINFDSPFCF   E             WORKSTN SFILE(SFLDTA01:RRN#)
@@ -61,6 +61,7 @@ Dow *In03 = *Off;
       Exec SQL
                     Call QSYS2.QCMDEXC(:CmdStr, :CmdLen);
     Other;
+      clearsub();
       Readc(e) SFLDTA01;
       Dow Not %Eof();
               // 在處理副檔資料前，將OPT欄位的RDMID值存入新的變數
@@ -142,6 +143,7 @@ dcl-proc inzsub;
   Enddo;
   INZMSG = '找不到該磁帶紀錄!'; // 迴圈結束仍未找到紀錄
         // EndSr;
+  return;
 end-proc;
       // *
       //�  掛載磁帶子程序
@@ -164,8 +166,8 @@ dcl-proc mntsub;
         CmdStr = 'CHKTAP DEV(' + %trim(RDLIB) + ') +
                   VOL(' + %trim(RDMID) + ') ENDOPT(*LEAVE)';
         CmdLen = %len(%trimr(CmdStr));
-        Exec SQL
-                  Call QSYS2.QCMDEXC(:CmdStr, :CmdLen);
+        snd-msg CmdStr;
+        Exec SQL Call QSYS2.QCMDEXC(:CmdStr, :CmdLen);
         If SQLSTATE = '00000';
           MNTMSG = '磁帶掛載成功...!';
         Else;
@@ -179,6 +181,7 @@ dcl-proc mntsub;
   Enddo;
   MNTMSG = '找不到該磁帶紀錄!';
       //   Endsr;
+  return;
 end-proc;
       // *
       //�  顯示磁帶資訊子程序
@@ -215,6 +218,7 @@ dcl-proc prtsub;
   Enddo;
   PRTMSG = '找不到該磁帶紀錄!';
         // EndSr;
+  return;
 end-proc;
       // *
       //�  刷新磁帶資訊子程序
@@ -230,6 +234,7 @@ dcl-proc rfhsub;
           // 指令執行後重新開啟檔案
   Open TAPINF;
       //   EndSr;
+  return;
 end-proc;
       // *
       //�  清除副檔子程序
@@ -246,6 +251,7 @@ dcl-proc clearsub;
   *In53 = *On;
   RRN# = 0;
       //   EndSr;
+  return;
 end-proc;
       // *
       //�  載入副檔子程序
@@ -273,5 +279,6 @@ dcl-proc loadsub;
     Enddo;
   Endif;
         // EndSr;
+  return;
 end-proc;
       
