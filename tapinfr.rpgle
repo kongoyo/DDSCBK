@@ -1,15 +1,14 @@
 **free
-ctl-opt option(*nodebugio:*srcstmt) dftactgrp(*no) ;  
-dcl-f tapinfd workstn indds(Dspf) sfile(SFL01:SFLRRN) ;
+ctl-opt option(*srcstmt) dftactgrp(*no) ;  
+dcl-f tapinfd workstn indds(Dspf) sfile(SFLCTL:SFLRRN) ;
 dcl-ds Dspf qualified ;
   Exit ind pos(3) ;
   Refresh ind pos(5) ;
-  SubfileDisplay ind pos(30) ;
-  SubfileClear ind pos(50) ;
-  SubfileEnd ind pos(51) ;
+  SubfileDisplay ind pos(50) ;
+  SubfileClear ind pos(52) ;
+  SubfileEnd ind pos(53) ;
 end-ds;
-dcl-f tapinf extfile('DDSCBK/TAPINF') keyed ;
-dcl-s SubfileMaximum int(10) ;
+dcl-f tapinfl extfile('STEVE/TAPINFL') keyed ;
 
 LoadSubfile();
 dow *inlr = *off;
@@ -23,7 +22,7 @@ dow *inlr = *off;
   Dspf.SubfileDisplay = *on ;
   Dspf.SubfileClear = *off ;
   // Write the subfile header
-  write SFL01;
+  write SFLCTL;
   // Load the subfile with data
   LoadSubfile();
   // Display the subfile
@@ -36,25 +35,24 @@ dow *inlr = *off;
   Dspf.SubfileDisplay = *off ;
   Dspf.SubfileClear = *on ;
   // End the program
-  return;
 enddo ;
 *inlr = *on;
 
 
 dcl-proc LoadSubfile;
-  read tapinf;
+  read tapinflr;
   if (%eof) ;
     dsply 'No records found in TAPINF file.' ;
     *inlr = *on;
     return;
   endif ;
-  dow not %eof(tapinf);
-    read tapinf;
+  dow not %eof(tapinfl);
+    read tapinflr;
     if (%eof) ;
       leave ;
     endif ;
     SFLRRN += 1 ;
-    write SFL01;
+    write SFLCTL;
   enddo ;
   Dspf.SubfileEnd = *off ;
   Dspf.SubfileDisplay = *on ;
@@ -66,22 +64,22 @@ dcl-proc LoadSubfile;
   //     leave ;
   //   endif ;
   //   SFLRRN += 1 ;
-  //   write SFL01 ;
+  //   write SFLCTL ;
   // enddo ;
   SubfileMaximum = SFLRRN ;
-  ChainSubfile();
+  ChainSubfile(SubfileMaximum);
   Dspf.SubfileEnd = *on ;
   Dspf.SubfileClear = *on ;
   Dspf.SubfileDisplay = *off ;
-  *inlr = *on;
-  return;
 end-proc ;
 
 dcl-proc ChainSubfile ;
+  dcl-pi *n;
+    SubfileMaximum int(10);
+  end-pi;
   dcl-s Number int(10) ;
   for Number = 1 to SubfileMaximum ;
-    chain Number SFL01 ;
+    chain Number SFLCTL ;
     // dsply (%char(SFLRRN) + ' ' + NAME) ;
   endfor ;
-  return;
 end-proc ;
