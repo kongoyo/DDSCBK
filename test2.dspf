@@ -1,0 +1,24 @@
+     A                                      DSPSIZ(24 80 *DS3)
+     A          R SFLRCD                    SFL
+     A            CUSTID         7S 0B 10 10
+     A            CUSTNAM       30A  B 10 20
+     A            CUSTCTY       15A  B 10 51
+     A          R SFLCTL                    SFLCTL(SFLRCD)
+     A                                      SFLSIZ(0100)
+     A                                      SFLPAG(0005)
+     A  20                                  SFLCLR
+     A  21                                  SFLDSP
+     A  21                                  SFLDSPCTL
+     A                                      CA03(03)
+     A                                      CA12(12)
+     A                                  8 10'CUST ID'
+     A                                      DSPATR(HI)
+     A                                  8 20'CUST NAME'
+     A                                      DSPATR(HI)
+     A                                  8 51'CUST CITY'
+     A                                      DSPATR(HI)
+     A                                  2 20'INPUT QUERY CUST NAME...'
+     A                                      DSPATR(ND)
+     A            SRCHNAME      30A  I  4 20
+     A          R FOOTER 
+     A                                 20  2'F3=END   F12=CANCEL'

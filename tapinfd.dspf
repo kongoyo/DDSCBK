@@ -1,35 +1,32 @@
-     A*%%TS  SD  20250807  192550  CLARK       REL-V7R3M0  5770-WDS
-     A*%%EC
      A                                      DSPSIZ(24 80 *DS3)
      A                                      INDARA
-     A                                      PRINT
-     A                                      REF(STEVE/TAPINFL)
-     A          R SFLDTA                    SFL
-     A*%%TS  SD  20250805  135743  CLARK       REL-V7R3M0  5770-WDS
-     A            SFLRRN         4S 0H      
-     A            OPT            1A  I  9  5
-     A            RDMID     R        O  9 10
-     A            RDVOL     R        O  9 20
-     A            RDMTYP    R        O  9 27
-     A            RDLIB     R        O  9 33
-     A            RDLOC     R        O  9 44
-     A            RDLOCI    R        O  9 55
-     A            RDWPR     R        O  9 65
-     A          R SFLCTL                    SFLCTL(SFLDTA)
-     A*%%TS  SD  20250807  192550  CLARK       REL-V7R3M0  5770-WDS
-     A                                      SFLSIZ(9999)
+     A          R TAPI01                    SFL
+     A  64                                  SFLNXTCHG
+     A            OPT            1A  I  9  4
+     A            RDMID          6A  O  9 10
+     A            RDVOL          6A  O  9 20
+     A            RDMTYP         2A  O  9 27
+     A            RDLIB         10A  O  9 33
+     A            RDLOC         10A  O  9 44
+     A            RDLOCI         1A  O  9 55
+     A            RDWPR          1A  O  9 65
+     A          R TAPI02                    SFLCTL(TAPI01)
+     A                                      SFLSIZ(0080)
      A                                      SFLPAG(0010)
-     A                                      CA03(03 'Exit')
-     A                                      CA05(05 'Refresh')
-     A                                      CA06(06 'Add')
-     A                                      CA07(07 'Create SPLF')
-     A                                      CA08(08 'Check SPLF')
-     A  99                                  OVERLAY
-     A  50                                  SFLDSP
-     A  51                                  SFLDSPCTL
-     A  52                                  SFLCLR
-     A  53                                  SFLEND(*MORE)
-     A            MSG           45A  O  4 24COLOR(RED)
+     A                                      CA03(03 'F3=Exit')
+     A                                      CA05(05 'F5=Refresh Screen')
+     A                                      CA12(12 'F12=Cancel')
+     A  95                                  CA06
+     A                                      CA07
+     A                                      CA08
+     A  39                                  PAGEDOWN(43)
+     A  39                                  PAGEUP(44)
+     A                                      LOCK
+     A                                      OVERLAY
+     A  60                                  SFLDSP
+     A  61                                  SFLDSPCTL
+     A  62                                  SFLCLR
+     A N63                                  SFLEND(*MORE)
      A                                  2 36'Tape Table'
      A                                      COLOR(WHT)
      A                                      DSPATR(HI)
@@ -78,8 +75,24 @@
      A                                      COLOR(WHT)
      A                                  3  4'User  :'
      A                                  3 12USER
+     A          R TAPI03
+     A                                      LOCK
+     A                                      OVERLAY
+     A                                 23  4'F3=Exit'
+     A                                      COLOR(BLU)
+     A                                 23 13'F5=Refresh Screen'
+     A                                      COLOR(BLU)
+     A                                 23 33'F6=Add Record'
+     A                                      COLOR(BLU)
+     A                                 23 49'F7=Create SPLF'
+     A                                      COLOR(BLU)
+     A                                 23 66'F8=Tapes SPLF'
+     A                                      COLOR(BLU)
+     A          R TAPI04
+     A  99                                  ALARM
+     A  99        MSG           45A  O  4 24COLOR(RED)
+     A  99                                  DSPATR(RI)
      A          R INZREC
-     A*%%TS  SD  20250807  164652  CLARK       REL-V7R3M0  5770-WDS
      A                                      WINDOW(5 22 12 34)
      A                                      CA12(12 'Cancel')
      A                                      WDWBORDER((*CHAR '#-#||#-#'))
@@ -127,20 +140,4 @@
      A                                      COLOR(WHT)
      A                                 11 21'F12 = Cancel'
      A                                      COLOR(WHT)
-     A          R FOOTER
-     A*%%TS  SD  20250512  120821  CLARK       REL-V7R3M0  5770-WDS
-     A                                 23  4'F3=Exit'
-     A                                      COLOR(BLU)
-     A                                      DSPATR(RI)
-     A                                 23 14'F5=Refresh Screen'
-     A                                      COLOR(BLU)
-     A                                      DSPATR(RI)
-     A                                 23 33'F6=Add Record'
-     A                                      COLOR(BLU)
-     A                                      DSPATR(RI)
-     A                                 23 49'F7=Create SPLF'
-     A                                      COLOR(BLU)
-     A                                      DSPATR(RI)
-     A                                 23 66'F8=Tapes SPLF'
-     A                                      COLOR(BLU)
-     A                                      DSPATR(RI)
+
